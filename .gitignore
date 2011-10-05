@@ -1,4 +1,5 @@
 bin/
+gen/
 target/
 src/test/resources/META-INF/config.properties
 .classpath
