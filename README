@@ -1,7 +1,7 @@
 #multi-translator
 * * *
 
-An Android app that displays machine translations from multiple services.
+An Android app that displays machine translations from multiple services side-by-side.
 
 ## Requires
 
@@ -12,7 +12,7 @@ An Android app that displays machine translations from multiple services.
 License
 =======
 
-The apertium-translator-java-api is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+multi-translator is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
     /*
      * Copyright 2011 Robert Theis

@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2011 Robert Theis
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.robtheis.translator;
 
 import android.app.Activity;
@@ -46,7 +61,7 @@ public class MultiTranslatorActivity extends Activity {
         
 //        // APERTIUM
 //        
-//        Translate.setKey("KMZfX32tsIPfivsByUexr84f08Y");
+//        Translate.setKey("");
 //	try {
 //	    String translatedText = Translate.execute("The quick brown fox jumps over the lazy dog.", Language.ENGLISH, Language.SPANISH);
 //	    System.out.println(translatedText);
@@ -57,7 +72,7 @@ public class MultiTranslatorActivity extends Activity {
 //	}
 //
 //	// MICROSOFT
-//	com.memetix.mst.translate.Translate.setKey("FE55328FE94D3809B4C6F458F1C5E4E655FE47FF");
+//	com.memetix.mst.translate.Translate.setKey("");
 //	try {
 //	    String translatedText = 
 //		com.memetix.mst.translate.Translate.execute("The quick brown fox jumps over the lazy dog.", com.memetix.mst.language.Language.ENGLISH, 
