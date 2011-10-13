@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!-- TRANSLATION SERVICE SETTINGS -->
+	<PreferenceCategory android:title="Translation service settings">
+
+		<CheckBoxPreference android:key="preference_service1" 
+		    android:title="@string/service1"
+		    android:defaultValue="true"/>
+		<CheckBoxPreference android:key="preference_service2"
+			android:title="@string/service2"
+			android:defaultValue="true"/>
+		<CheckBoxPreference android:key="preference_service3"
+			android:title="@string/service3"
+			android:defaultValue="true"/>
+		<CheckBoxPreference android:key="preference_service4"
+			android:title="@string/service4"
+			android:defaultValue="true"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

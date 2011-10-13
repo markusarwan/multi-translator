@@ -5,7 +5,7 @@ An Android app that displays machine translations from multiple services side-by
 
 ## Requires
 
-* [apertium-translator-java-api-0.1.jar](https://github.com/downloads/rmtheis/apertium-translator-java-api/apertium-translator-java-api-0.1.jar)
+* [apertium-translator-java-api-0.1.1.jar](https://github.com/downloads/rmtheis/apertium-translator-java-api/apertium-translator-java-api-0.1.1.jar)
 * [google-api-translate-java-0.95.jar](http://code.google.com/p/google-api-translate-java/downloads/detail?name=google-api-translate-java-0.95.jar&can=2&q=)
 * [microsoft-translator-java-api-0.4.jar](http://code.google.com/p/microsoft-translator-java-api/downloads/detail?name=microsoft-translator-java-api-0.4.jar&can=2&q=)
 
