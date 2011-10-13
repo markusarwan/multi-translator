@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.robtheis.translator"
       android:versionCode="1"
-      android:versionName="1.0">
+      android:versionName="1.0" package="com.robtheis.translator">
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -14,7 +13,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+		<activity android:name=".PreferencesActivity" />
     </application>
     
 </manifest>
