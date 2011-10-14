@@ -132,8 +132,9 @@ public class MultiTranslatorActivity extends Activity {
     inputField.addTextChangedListener(new TextWatcher() {
       @Override
       public void afterTextChanged(Editable s) {
-    	Log.d(TAG, "afterTextChanged");
-    	startOfflineTranslation();
+    	if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_ONLINE, true)) {
+    	  startOfflineTranslation();
+    	}
       }
 
       @Override
@@ -281,7 +282,6 @@ public class MultiTranslatorActivity extends Activity {
    * @param textView The text field to receive the translated text
    */
   private void startOfflineTranslation() {
-    
     String source = sharedPreferences.getString(PreferencesActivity.KEY_SOURCE_LANGUAGE_PREFERENCE, 
         PreferencesActivity.DEFAULT_SOURCE_LANGUAGE);
     String target = sharedPreferences.getString(PreferencesActivity.KEY_TARGET_LANGUAGE_PREFERENCE, 

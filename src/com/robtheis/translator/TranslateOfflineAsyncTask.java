@@ -21,17 +21,13 @@ import android.util.TypedValue;
 import android.widget.TextView;
 
 import com.robtheis.aptr.language.Language;
-import com.robtheis.aptr.translate.Translate;
 
 /**
- * AsyncTask to request a machine translation from the web service and display the result in the
- * given TextView.
+ * Place holder for the offline Apertium translator.
  * 
  * @author Robert Theis
  */
-public final class TranslateApertiumAsyncTask extends AsyncTask<String, Void, Boolean> {
-
-  private static final String API_KEY = "KMZfX32tsIPfivsByUexr84f08Y";
+public final class TranslateOfflineAsyncTask extends AsyncTask<String, Void, Boolean> {
 
   private Language sourceLanguage;
   private Language targetLanguage;
@@ -39,7 +35,7 @@ public final class TranslateApertiumAsyncTask extends AsyncTask<String, Void, Bo
   private String translatedText;
   private TextView textView;
 
-  public TranslateApertiumAsyncTask(String text, Language sourceLanguage, Language targetLanguage, TextView textView) {
+  public TranslateOfflineAsyncTask(String text, Language sourceLanguage, Language targetLanguage, TextView textView) {
     this.sourceLanguage = sourceLanguage;
     this.targetLanguage = targetLanguage;
     this.text = text;
@@ -49,18 +45,27 @@ public final class TranslateApertiumAsyncTask extends AsyncTask<String, Void, Bo
   @Override
   protected synchronized void onPreExecute() {
     super.onPreExecute();
-    
-    textView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL), Typeface.NORMAL);
-    textView.setTextSize(14);
-    textView.setText("Translating...");
   }
   
   @Override
   protected synchronized Boolean doInBackground(String... arg0) {
-    Translate.setKey(API_KEY);
     try {
-      // Request translation
-      translatedText = Translate.execute(text, sourceLanguage, targetLanguage);
+      // Check if the text matches our place holder values
+      if (text.equalsIgnoreCase("stop")) {
+    	translatedText = "alto";
+      } else if (text.equalsIgnoreCase("alto")) {
+        translatedText = "stop";
+      } else if (text.equalsIgnoreCase("hola")) {
+        translatedText = "hello";
+      } else if (text.equalsIgnoreCase("hello")) {
+        translatedText = "hola";
+      } else if (text.equalsIgnoreCase("prueba")) {
+          translatedText = "test";
+      } else if (text.equalsIgnoreCase("test")) {
+          translatedText = "prueba";
+      } else {
+        translatedText = text;
+      }
     } catch (Exception e) {
       e.printStackTrace();
       return false;

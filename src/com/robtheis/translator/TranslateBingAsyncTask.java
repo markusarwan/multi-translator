@@ -31,7 +31,7 @@ import com.memetix.mst.translate.Translate;
  */
 public final class TranslateBingAsyncTask extends AsyncTask<String, Void, Boolean> {
 
-  private static final String API_KEY = "/* put API key here */";
+  private static final String API_KEY = "FE55328FE94D3809B4C6F458F1C5E4E655FE47FF";
 
   private Language sourceLanguage;
   private Language targetLanguage;
