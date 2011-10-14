@@ -150,6 +150,11 @@ class TranslatorApertium {
     standardizedName = standardizedName.replace("(", "");   
     standardizedName = standardizedName.replace(")", "");
     
+    // Map Norwegian to Norwegian-Bokmal
+    if (standardizedName.equals("NORWEGIAN")) {
+      standardizedName = "NORWEGIAN_BOKMAL";
+    }
+    
     return Language.valueOf(standardizedName);
   }
 }
