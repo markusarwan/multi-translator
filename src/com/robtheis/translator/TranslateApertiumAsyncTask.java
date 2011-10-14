@@ -30,11 +30,8 @@ import com.robtheis.aptr.translate.Translate;
  * @author Robert Theis
  */
 public final class TranslateApertiumAsyncTask extends AsyncTask<String, Void, Boolean> {
-<<<<<<< HEAD
+
   private static final String API_KEY = "/* put API key here */";
-=======
-  private static final String API_KEY = "KMZfX32tsIPfivsByUexr84f08Y";
->>>>>>> f9efc55adcb26eea847bf4c4fefc7ac0d764b504
 
   private Language sourceLanguage;
   private Language targetLanguage;

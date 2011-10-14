@@ -30,11 +30,8 @@ import com.google.api.translate.Translate;
  * @author Robert Theis
  */
 public final class TranslateGoogleAsyncTask extends AsyncTask<String, Void, Boolean> {
-<<<<<<< HEAD
+
   private static final String API_KEY = "/* put API key here */";
-=======
-  private static final String API_KEY = "AIzaSyC0Wd5wJPlLclmXsx09rnWh5UfCRbehtYE";
->>>>>>> f9efc55adcb26eea847bf4c4fefc7ac0d764b504
   private static final String HTTP_REFERRER = "github.com/rmtheis/multi-translator"; 
 
   private Language sourceLanguage;

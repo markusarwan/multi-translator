@@ -16,7 +16,6 @@
 package com.robtheis.translator;
 
 import android.graphics.Typeface;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.robtheis.aptr.language.Language;
@@ -80,7 +79,7 @@ class TranslatorApertium {
    * @param target The target language for translation
    * @return True if the given language pair is valid
    */
-  private static boolean isValidLanguagePair(Language sourceLanguage, Language targetLanguage) {
+  protected static boolean isValidLanguagePair(Language sourceLanguage, Language targetLanguage) {
     if (sourceLanguage == null || targetLanguage == null) {
       return false;
     }
@@ -140,7 +139,7 @@ class TranslatorApertium {
    * @return The Language object representing this language
    * @throws IllegalArgumentException
    */
-  private static Language toLanguage(String languageName) throws IllegalArgumentException {   
+  protected static Language toLanguage(String languageName) throws IllegalArgumentException {   
     // Convert string to all caps
     String standardizedName = languageName.toUpperCase();
     

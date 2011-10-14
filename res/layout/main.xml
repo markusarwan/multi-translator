@@ -47,11 +47,12 @@
 		android:layout_height="wrap_content" android:layout_below="@+id/textInput">
 		<RelativeLayout android:id="@+id/translations"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:visibility="gone">
-			
+			>
+
 			<!-- Apertium Offline -->
 			<RelativeLayout android:id="@+id/trans_section1"
-				android:layout_width="fill_parent" android:layout_height="wrap_content">
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone">
 				<TextView android:layout_width="fill_parent" android:id="@+id/label1"
 					android:text="@string/service1" android:layout_height="wrap_content"></TextView>
 				<TextView android:layout_width="fill_parent" android:id="@+id/translation1"
@@ -65,59 +66,66 @@
 					android:paddingRight="0dp" android:paddingBottom="5dp"
 					android:paddingTop="5dp" android:layout_below="@+id/translation1" />
 			</RelativeLayout>
-
-			<!-- Apertium Online -->
-			<RelativeLayout android:id="@+id/trans_section2"
+			
+			<!-- All web service based translation results -->
+			<RelativeLayout android:id="@+id/translations_online"
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:layout_below="@+id/trans_section1">
-				<TextView android:layout_width="fill_parent" android:id="@+id/label2"
-					android:text="@string/service2" android:layout_height="wrap_content"></TextView>
-				<TextView android:layout_width="fill_parent" android:id="@+id/translation2"
-					android:text="" android:typeface="normal" android:layout_height="wrap_content"
-					android:layout_below="@+id/label2"></TextView>
+				android:layout_below="@+id/trans_section1"
+				android:visibility="gone">
 
-				<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-					android:id="@+id/bar2" android:src="@android:drawable/divider_horizontal_dark"
+				<!-- Apertium Online -->
+				<RelativeLayout android:id="@+id/trans_section2"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:scaleType="fitXY" android:paddingLeft="0dp"
-					android:paddingRight="0dp" android:paddingBottom="5dp"
-					android:paddingTop="5dp" android:layout_below="@+id/translation2" />
-			</RelativeLayout>
+					android:layout_below="@+id/trans_section1">
+					<TextView android:layout_width="fill_parent" android:id="@+id/label2"
+						android:text="@string/service2" android:layout_height="wrap_content"></TextView>
+					<TextView android:layout_width="fill_parent" android:id="@+id/translation2"
+						android:text="" android:typeface="normal" android:layout_height="wrap_content"
+						android:layout_below="@+id/label2"></TextView>
 
-			<!-- Bing Translator -->
-			<RelativeLayout android:id="@+id/trans_section3"
-				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:layout_below="@+id/trans_section2">
-				<TextView android:layout_width="fill_parent" android:id="@+id/label3"
-					android:text="@string/service3" android:layout_height="wrap_content"></TextView>
-				<TextView android:layout_width="fill_parent" android:id="@+id/translation3"
-					android:text="" android:typeface="normal" android:layout_height="wrap_content"
-					android:layout_below="@+id/label3"></TextView>
+					<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+						android:id="@+id/bar2" android:src="@android:drawable/divider_horizontal_dark"
+						android:layout_width="fill_parent" android:layout_height="wrap_content"
+						android:scaleType="fitXY" android:paddingLeft="0dp"
+						android:paddingRight="0dp" android:paddingBottom="5dp"
+						android:paddingTop="5dp" android:layout_below="@+id/translation2" />
+				</RelativeLayout>
 
-				<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-					android:id="@+id/bar3" android:src="@android:drawable/divider_horizontal_dark"
+				<!-- Bing Translator -->
+				<RelativeLayout android:id="@+id/trans_section3"
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:scaleType="fitXY" android:paddingLeft="0dp"
-					android:paddingRight="0dp" android:paddingBottom="5dp"
-					android:paddingTop="5dp" android:layout_below="@+id/translation3" />
-			</RelativeLayout>
+					android:layout_below="@+id/trans_section2">
+					<TextView android:layout_width="fill_parent" android:id="@+id/label3"
+						android:text="@string/service3" android:layout_height="wrap_content"></TextView>
+					<TextView android:layout_width="fill_parent" android:id="@+id/translation3"
+						android:text="" android:typeface="normal" android:layout_height="wrap_content"
+						android:layout_below="@+id/label3"></TextView>
 
-			<!-- Google Translate -->
-			<RelativeLayout android:layout_height="wrap_content"
-				android:id="@+id/trans_section4" android:layout_width="fill_parent"
-				android:layout_below="@+id/trans_section3">
-				<TextView android:text="@string/service4"
-					android:layout_height="wrap_content" android:id="@+id/label4"
-					android:layout_width="fill_parent"></TextView>
-				<TextView android:layout_below="@+id/label4" android:text="" android:typeface="normal"
-					android:layout_height="wrap_content" android:id="@+id/translation4"
-					android:layout_width="fill_parent"></TextView>
-				<ImageView android:layout_below="@+id/translation4"
-					android:paddingRight="0dp" android:layout_height="wrap_content"
-					android:paddingBottom="5dp" android:src="@android:drawable/divider_horizontal_dark"
-					android:paddingLeft="0dp" android:id="@+id/bar4"
-					android:layout_width="fill_parent" android:paddingTop="5dp"
-					android:scaleType="fitXY"></ImageView>
+					<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+						android:id="@+id/bar3" android:src="@android:drawable/divider_horizontal_dark"
+						android:layout_width="fill_parent" android:layout_height="wrap_content"
+						android:scaleType="fitXY" android:paddingLeft="0dp"
+						android:paddingRight="0dp" android:paddingBottom="5dp"
+						android:paddingTop="5dp" android:layout_below="@+id/translation3" />
+				</RelativeLayout>
+
+				<!-- Google Translate -->
+				<RelativeLayout android:layout_height="wrap_content"
+					android:id="@+id/trans_section4" android:layout_width="fill_parent"
+					android:layout_below="@+id/trans_section3">
+					<TextView android:text="@string/service4"
+						android:layout_height="wrap_content" android:id="@+id/label4"
+						android:layout_width="fill_parent"></TextView>
+					<TextView android:layout_below="@+id/label4" android:text=""
+						android:typeface="normal" android:layout_height="wrap_content"
+						android:id="@+id/translation4" android:layout_width="fill_parent"></TextView>
+					<ImageView android:layout_below="@+id/translation4"
+						android:paddingRight="0dp" android:layout_height="wrap_content"
+						android:paddingBottom="5dp" android:src="@android:drawable/divider_horizontal_dark"
+						android:paddingLeft="0dp" android:id="@+id/bar4"
+						android:layout_width="fill_parent" android:paddingTop="5dp"
+						android:scaleType="fitXY"></ImageView>
+				</RelativeLayout>
 			</RelativeLayout>
 		</RelativeLayout>
 	</ScrollView>

@@ -16,7 +16,6 @@
 package com.robtheis.translator;
 
 import android.graphics.Typeface;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.memetix.mst.language.Language;

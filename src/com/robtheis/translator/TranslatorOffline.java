@@ -15,11 +15,44 @@
  */
 package com.robtheis.translator;
 
+import com.robtheis.aptr.language.Language;
+
+import android.graphics.Typeface;
+import android.widget.TextView;
+
 /**
  * Place holder for offline Apertium translation being developed.
  * 
  * @author Robert Theis
  */
 class TranslatorOffline extends TranslatorApertium {
-  // TODO translateOffline()
+  static void translateOffline(String text, String source, String target, TextView textView) {
+	  if (source == null || target == null) {
+	      throw new IllegalArgumentException();
+	    }
+
+	    Language sourceLanguage = null;
+	    Language targetLanguage = null;
+	    try {
+	      sourceLanguage = toLanguage(source);
+	      targetLanguage = toLanguage(target);
+	    } catch (IllegalArgumentException e) {
+	      
+	      // The source or target language is not in the enum list of Languages for this service.
+	      textView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC), Typeface.ITALIC);
+	      textView.setTextSize(14);
+	      textView.setText("Unsupported language pair");
+	    }
+	    
+	    // Check if this is a valid language pair for this web service
+	    if (isValidLanguagePair(sourceLanguage, targetLanguage)) {     
+	      // Start an AsyncTask to perform the translation request.
+	      new TranslateOfflineAsyncTask(text, sourceLanguage, targetLanguage, textView).execute();
+	    } else {
+	      // Languages are on the list, but this source/target pair is not supported
+	      textView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC), Typeface.ITALIC);
+	      textView.setTextSize(14);
+	      textView.setText("Unsupported language pair");
+	    }
+  }
 }

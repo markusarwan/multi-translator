@@ -29,7 +29,10 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,7 +60,7 @@ public class MultiTranslatorActivity extends Activity {
 
   private EditText inputField;
   private Button goButton, swapButton;
-  private View translationView;
+  private View onlineTranslationsView;
   private static View section1, section2, section3, section4;
   private TextView translation1, translation2, translation3, translation4;
   private static SharedPreferences sharedPreferences;
@@ -79,7 +82,7 @@ public class MultiTranslatorActivity extends Activity {
     swapButton = (Button) findViewById(R.id.button_swap_languages);
     goButton = (Button) findViewById(R.id.button_go);
     inputField = (EditText) findViewById(R.id.editText1);
-    translationView = (View) findViewById(R.id.translations);
+    onlineTranslationsView = (View) findViewById(R.id.translations_online);
     section1 = (View) findViewById(R.id.trans_section1);
     section2 = (View) findViewById(R.id.trans_section2);
     section3 = (View) findViewById(R.id.trans_section3);
@@ -92,7 +95,7 @@ public class MultiTranslatorActivity extends Activity {
     // Restore the translation text fields if this is an orientation change and we're restoring
     // the savedInstanceState.
     if (savedInstanceState != null && savedInstanceState.getBoolean("translations_view_visibility")) {
-      translationView.setVisibility(View.VISIBLE);
+      onlineTranslationsView.setVisibility(View.VISIBLE);
       translation1.setTextSize(savedInstanceState.getFloat("translation1_text_size"));
       translation2.setTextSize(savedInstanceState.getFloat("translation2_text_size"));
       translation3.setTextSize(savedInstanceState.getFloat("translation3_text_size"));
@@ -101,6 +104,9 @@ public class MultiTranslatorActivity extends Activity {
       translation2.setText(savedInstanceState.getString("translation2_text"));
       translation3.setText(savedInstanceState.getString("translation3_text"));
       translation4.setText(savedInstanceState.getString("translation4_text"));
+    }
+    if (savedInstanceState != null && savedInstanceState.getBoolean("section1_view_visibility")) {
+      section1.setVisibility(View.VISIBLE);
     }
     
     // Set up the list of languages available, based on service preferences
@@ -122,12 +128,24 @@ public class MultiTranslatorActivity extends Activity {
         swapLanguages();
       }
     });
-    
-//    inputField.setOnKeyListener(new EditText.OnKeyListener() {
-//      public void onKey(View v, int keyCode, KeyEvent event) {
-//        Log.d(TAG, "onKey");
-//      }
-//    });
+
+    inputField.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void afterTextChanged(Editable s) {
+    	Log.d(TAG, "afterTextChanged");
+    	startOfflineTranslation();
+      }
+
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    	// Do nothing
+      }
+
+      @Override
+    	public void onTextChanged(CharSequence s, int start, int before, int count) {
+    	// Do nothing
+      }
+    });
   }
   
   @Override
@@ -145,7 +163,8 @@ public class MultiTranslatorActivity extends Activity {
   @Override
   protected void onSaveInstanceState(Bundle state) {
     super.onSaveInstanceState(state);
-    state.putBoolean("translations_view_visibility", translationView.isShown());
+    state.putBoolean("section1_view_visibility", section1.isShown());
+    state.putBoolean("translations_view_visibility", onlineTranslationsView.isShown());
     state.putString("translation1_text", translation1.getText().toString());
     state.putString("translation2_text", translation2.getText().toString());
     state.putString("translation3_text", translation3.getText().toString());
@@ -157,16 +176,13 @@ public class MultiTranslatorActivity extends Activity {
     state.putFloat("translation3_text_size", translation3.getTextSize());
     state.putFloat("translation4_text_size", translation4.getTextSize());
   }
-
+  
   /** Check service preferences, generate a list of available languages, and set TextView visibility. */
   public static void initLanguageList() {
     // If a particular service is active (checked), add its languages to languagesList
     List<String[]> languagesList = new ArrayList<String[]>();
     if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true)) {
       languagesList.add(languagesApertiumOffline);
-      section1.setVisibility(View.VISIBLE);
-    } else {
-      section1.setVisibility(View.GONE);
     }
     if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_ONLINE, true)) {
       languagesList.add(languagesApertiumOnline);
@@ -247,7 +263,7 @@ public class MultiTranslatorActivity extends Activity {
     if (!source.equals(target)) {
       String text = inputField.getText().toString();
       if (text.length() > 0) {
-        translationView.setVisibility(View.VISIBLE);
+        onlineTranslationsView.setVisibility(View.VISIBLE);
         MultiTranslator.translate(this, source, target, text);
       } else {
         // Tell the user to enter some text for translation
@@ -266,18 +282,25 @@ public class MultiTranslatorActivity extends Activity {
    */
   private void startOfflineTranslation() {
     
-    Log.d(TAG, "startOfflineTranslation");
-    
-    // TODO duplicate source/target as class instance variables instead of reading from preferences
-    // every time
     String source = sharedPreferences.getString(PreferencesActivity.KEY_SOURCE_LANGUAGE_PREFERENCE, 
         PreferencesActivity.DEFAULT_SOURCE_LANGUAGE);
     String target = sharedPreferences.getString(PreferencesActivity.KEY_TARGET_LANGUAGE_PREFERENCE, 
         PreferencesActivity.DEFAULT_TARGET_LANGUAGE);
     
-    // TODO put offline translation in a separate View from translationView
-    // TODO check text length and source!=target
-    // TODO TranslatorOffline.translateOffline(inputField.getText().toString(), source, target, translation1);
+    // Hide the offline translation section if no text is present
+    if (inputField.getText().length() == 0) {
+      section1.setVisibility(View.GONE);
+      onlineTranslationsView.setVisibility(View.GONE);
+    } else if (!source.equals(target)) {
+      section1.setVisibility(View.VISIBLE);
+      {
+    	// Start the translation
+    	TranslatorOffline.translateOffline(inputField.getText().toString(), source, target, translation1);  
+      }
+    } else {
+      // Tell the user to choose a language pair
+      Toast.makeText(getApplicationContext(), "Choose a language pair for translation", Toast.LENGTH_LONG);
+    }
   }
   
   public class SourceLanguageOnItemSelectedListener implements OnItemSelectedListener {
