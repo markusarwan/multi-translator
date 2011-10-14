@@ -24,18 +24,20 @@ import java.util.List;
 import java.util.Set;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -67,6 +69,11 @@ public class MultiTranslatorActivity extends Activity {
   private Spinner sourceSpinner, targetSpinner;
 
   private static final int SETTINGS_ID = Menu.FIRST;
+  
+  private static final int OPTIONS_COPY_TRANSLATION1 = Menu.FIRST;
+  private static final int OPTIONS_COPY_TRANSLATION2 = Menu.FIRST + 1;
+  private static final int OPTIONS_COPY_TRANSLATION3 = Menu.FIRST + 2;
+  private static final int OPTIONS_COPY_TRANSLATION4 = Menu.FIRST + 3;
 
   private static String[] languagesApertiumOffline;
   private static String[] languagesApertiumOnline;
@@ -91,6 +98,12 @@ public class MultiTranslatorActivity extends Activity {
     translation2 = (TextView) findViewById(R.id.translation2);
     translation3 = (TextView) findViewById(R.id.translation3);
     translation4 = (TextView) findViewById(R.id.translation4);
+    
+    // Accept long-press context menu events for translation text fields
+    registerForContextMenu(translation1);
+    registerForContextMenu(translation2);
+    registerForContextMenu(translation3);
+    registerForContextMenu(translation4);
     
     // Restore the translation text fields if this is an orientation change and we're restoring
     // the savedInstanceState.
@@ -304,7 +317,6 @@ public class MultiTranslatorActivity extends Activity {
   }
   
   public class SourceLanguageOnItemSelectedListener implements OnItemSelectedListener {
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
       String sourceLanguage = (String) sourceSpinner.getItemAtPosition(pos);
@@ -324,7 +336,6 @@ public class MultiTranslatorActivity extends Activity {
   }
 
   public class TargetLanguageOnItemSelectedListener implements OnItemSelectedListener {
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
       // Save the target language preference
@@ -338,6 +349,63 @@ public class MultiTranslatorActivity extends Activity {
     }
   }
 
+  @Override
+  public void onCreateContextMenu(ContextMenu menu, View v,
+      ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    if (v.equals(translation1)) {
+      menu.add(Menu.NONE, OPTIONS_COPY_TRANSLATION1, Menu.NONE, "Copy recognized text");
+    } else if (v.equals(translation2)) {
+      menu.add(Menu.NONE, OPTIONS_COPY_TRANSLATION2, Menu.NONE, "Copy translated text");
+    } else if (v.equals(translation3)) {
+      menu.add(Menu.NONE, OPTIONS_COPY_TRANSLATION3, Menu.NONE, "Copy translated text");
+    } else if (v.equals(translation4)) {
+      menu.add(Menu.NONE, OPTIONS_COPY_TRANSLATION4, Menu.NONE, "Copy translated text");
+    }
+  }
+
+  @Override
+  public boolean onContextItemSelected(MenuItem item) {
+    ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+    switch (item.getItemId()) {
+
+    case OPTIONS_COPY_TRANSLATION1:
+        clipboardManager.setText(translation1.getText());
+      if (clipboardManager.hasText()) {
+        Toast toast = Toast.makeText(this, "Text copied.", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.BOTTOM, 0, 0);
+        toast.show();
+      }
+      return true;
+    case OPTIONS_COPY_TRANSLATION2:
+        clipboardManager.setText(translation2.getText());
+      if (clipboardManager.hasText()) {
+        Toast toast = Toast.makeText(this, "Text copied.", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.BOTTOM, 0, 0);
+        toast.show();
+      }
+      return true;
+    case OPTIONS_COPY_TRANSLATION3:
+      clipboardManager.setText(translation3.getText());
+    if (clipboardManager.hasText()) {
+      Toast toast = Toast.makeText(this, "Text copied.", Toast.LENGTH_LONG);
+      toast.setGravity(Gravity.BOTTOM, 0, 0);
+      toast.show();
+    }
+    return true;
+  case OPTIONS_COPY_TRANSLATION4:
+      clipboardManager.setText(translation4.getText());
+    if (clipboardManager.hasText()) {
+      Toast toast = Toast.makeText(this, "Text copied.", Toast.LENGTH_LONG);
+      toast.setGravity(Gravity.BOTTOM, 0, 0);
+      toast.show();
+    }
+    return true;
+    default:
+      return super.onContextItemSelected(item);
+    }
+  }
+  
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
