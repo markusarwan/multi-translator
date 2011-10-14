@@ -43,10 +43,6 @@ public class PreferencesActivity extends PreferenceActivity implements
   public static final String KEY_TOGGLE_APERTIUM_ONLINE = "preference_service2";
   public static final String KEY_TOGGLE_BING_TRANSLATOR = "preference_service3";
   public static final String KEY_TOGGLE_GOOGLE_TRANSLATE = "preference_service4";
-  
-  // Preference keys carried over from ZXing project
-  public static final String KEY_HELP_VERSION_SHOWN = "preferences_help_version_shown";
-  public static final String KEY_NOT_OUR_RESULTS_SHOWN = "preferences_not_our_results_shown";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -55,32 +51,7 @@ public class PreferencesActivity extends PreferenceActivity implements
     PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
   }
 
-  /**
-   * Interface definition for a callback to be invoked when a shared
-   * preference is changed.
-   */
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {   
-    
-    // Update the languages available for translation based on the current translator selected.
-    if (key.equals(KEY_TOGGLE_APERTIUM_OFFLINE) || key.equals(KEY_TOGGLE_APERTIUM_ONLINE) || 
-	            key.equals(KEY_TOGGLE_BING_TRANSLATOR) || key.equals(KEY_TOGGLE_GOOGLE_TRANSLATE)) {
-      MultiTranslatorActivity.initLanguageList();
-    }
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-    
-    // Set up a listener for whenever a key changes
-    getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-    
-    // Unregister the listener
-    getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+    // Do nothing
   }
 }
