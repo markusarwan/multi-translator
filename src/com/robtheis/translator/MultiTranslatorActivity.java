@@ -64,7 +64,7 @@ public class MultiTranslatorActivity extends Activity {
   private Button goButton, swapButton;
   private View onlineTranslationsView;
   private static View section1, section2, section3, section4;
-  private TextView translation1, translation2, translation3, translation4;
+  private static TextView translation1, translation2, translation3, translation4;
   private static SharedPreferences sharedPreferences;
   private Spinner sourceSpinner, targetSpinner;
 
@@ -145,19 +145,19 @@ public class MultiTranslatorActivity extends Activity {
     inputField.addTextChangedListener(new TextWatcher() {
       @Override
       public void afterTextChanged(Editable s) {
-    	if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_ONLINE, true)) {
-    	  startOfflineTranslation();
-    	}
+    	  if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true)) {
+    	    startOfflineTranslation();
+    	  }
       }
 
       @Override
       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    	// Do nothing
+    	  // Do nothing
       }
 
       @Override
     	public void onTextChanged(CharSequence s, int start, int before, int count) {
-    	// Do nothing
+    	  // Do nothing
       }
     });
   }
@@ -165,6 +165,7 @@ public class MultiTranslatorActivity extends Activity {
   @Override
   public void onResume() {
     super.onResume();
+    initLanguageList();
     initSpinners();
   }
   
@@ -194,27 +195,46 @@ public class MultiTranslatorActivity extends Activity {
   /** Check service preferences, generate a list of available languages, and set TextView visibility. */
   public static void initLanguageList() {
     // If a particular service is active (checked), add its languages to languagesList
+    boolean isApertiumOfflineEnabled = sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true);
+    boolean isApertiumOnlineEnabled = sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_ONLINE, true);
+    boolean isBingTranslatorEnabled = sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_BING_TRANSLATOR, true);
+    boolean isGoogleTranslateEnabled = sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_GOOGLE_TRANSLATE, true);
+    
     List<String[]> languagesList = new ArrayList<String[]>();
-    if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true)) {
-      languagesList.add(languagesApertiumOffline);
+    
+    // If all services are un-checked, enable Google Translate.
+    if (!isApertiumOfflineEnabled && !isApertiumOnlineEnabled && !isBingTranslatorEnabled && !isGoogleTranslateEnabled) {
+      sharedPreferences.edit().putBoolean(PreferencesActivity.KEY_TOGGLE_GOOGLE_TRANSLATE, true).commit();
+      isGoogleTranslateEnabled = true;
     }
-    if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_ONLINE, true)) {
+    
+    // Set translation view visibility and build the list of languages available.
+    if (isApertiumOfflineEnabled) {
+      languagesList.add(languagesApertiumOffline);
+    } else {
+      section1.setVisibility(View.GONE);
+      translation1.setText("");
+    }
+    if (isApertiumOnlineEnabled) {
       languagesList.add(languagesApertiumOnline);
       section2.setVisibility(View.VISIBLE);
     } else {
       section2.setVisibility(View.GONE);
+      translation2.setText("");
     }
-    if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_BING_TRANSLATOR, true)) {
+    if (isBingTranslatorEnabled) {
       languagesList.add(languagesMicrosoft);
       section3.setVisibility(View.VISIBLE);
     } else {
       section3.setVisibility(View.GONE);
+      translation3.setText("");
     }
-    if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_GOOGLE_TRANSLATE, true)) {
+    if (isGoogleTranslateEnabled) {
       languagesList.add(languagesGoogle);
       section4.setVisibility(View.VISIBLE);
     } else {
       section4.setVisibility(View.GONE);
+      translation4.setText("");
     }
     
     // Combine the various arrays of supported languages into a single list
