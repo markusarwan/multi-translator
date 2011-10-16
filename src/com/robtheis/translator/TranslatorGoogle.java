@@ -64,6 +64,9 @@ class TranslatorGoogle {
       
       // Start an AsyncTask to perform the translation request.
       new TranslateGoogleAsyncTask(text, sourceLanguage, targetLanguage, textView).execute();
+    } else {
+      textView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC), Typeface.ITALIC);
+      textView.setText("Unavailable");
     }
   }
   
