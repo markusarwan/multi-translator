@@ -66,7 +66,8 @@ class TranslatorGoogle {
       new TranslateGoogleAsyncTask(text, sourceLanguage, targetLanguage, textView).execute();
     } else {
       textView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC), Typeface.ITALIC);
-      textView.setText("Unavailable");
+      textView.setTextSize(14);
+      textView.setText("Unsupported language pair");
     }
   }
   
