@@ -22,12 +22,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
 import android.text.Editable;
@@ -142,24 +142,26 @@ public class MultiTranslatorActivity extends Activity {
       }
     });
 
-    inputField.addTextChangedListener(new TextWatcher() {
-      @Override
-      public void afterTextChanged(Editable s) {
-    	  if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true)) {
-    	    startOfflineTranslation();
-    	  }
-      }
-
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    	  // Do nothing
-      }
-
-      @Override
-    	public void onTextChanged(CharSequence s, int start, int before, int count) {
-    	  // Do nothing
-      }
-    });
+    // This section commented to remove Apertium offline place holder in preparation for a release to Android Market
+    
+//    inputField.addTextChangedListener(new TextWatcher() {
+//      @Override
+//      public void afterTextChanged(Editable s) {
+//    	  if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true)) {
+//    	    startOfflineTranslation();
+//    	  }
+//      }
+//
+//      @Override
+//      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//    	  // Do nothing
+//      }
+//
+//      @Override
+//    	public void onTextChanged(CharSequence s, int start, int before, int count) {
+//    	  // Do nothing
+//      }
+//    });
   }
   
   @Override
@@ -195,7 +197,7 @@ public class MultiTranslatorActivity extends Activity {
   /** Check service preferences, generate a list of available languages, and set TextView visibility. */
   public static void initLanguageList() {
     // If a particular service is active (checked), add its languages to languagesList
-    boolean isApertiumOfflineEnabled = sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true);
+    boolean isApertiumOfflineEnabled = sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, false);
     boolean isApertiumOnlineEnabled = sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_ONLINE, true);
     boolean isBingTranslatorEnabled = sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_BING_TRANSLATOR, true);
     boolean isGoogleTranslateEnabled = sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_GOOGLE_TRANSLATE, true);
@@ -374,7 +376,7 @@ public class MultiTranslatorActivity extends Activity {
       ContextMenuInfo menuInfo) {
     super.onCreateContextMenu(menu, v, menuInfo);
     if (v.equals(translation1)) {
-      menu.add(Menu.NONE, OPTIONS_COPY_TRANSLATION1, Menu.NONE, "Copy recognized text");
+      menu.add(Menu.NONE, OPTIONS_COPY_TRANSLATION1, Menu.NONE, "Copy translated text");
     } else if (v.equals(translation2)) {
       menu.add(Menu.NONE, OPTIONS_COPY_TRANSLATION2, Menu.NONE, "Copy translated text");
     } else if (v.equals(translation3)) {
