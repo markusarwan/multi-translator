@@ -7,7 +7,7 @@
 
 		<CheckBoxPreference android:key="preference_service1" 
 		    android:title="@string/service1"
-		    android:defaultValue="true"/>
+		    android:defaultValue="false"/>
 		<CheckBoxPreference android:key="preference_service2"
 			android:title="@string/service2"
 			android:defaultValue="true"/>
