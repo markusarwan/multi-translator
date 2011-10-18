@@ -8,7 +8,6 @@ An Android app that displays machine translations from multiple services side-by
 * [apertium-translator-java-api-0.1.1.jar](https://github.com/downloads/rmtheis/apertium-translator-java-api/apertium-translator-java-api-0.1.1.jar)
 * [google-api-translate-java-0.95.jar](http://code.google.com/p/google-api-translate-java/downloads/detail?name=google-api-translate-java-0.95.jar&can=2&q=)
 * [microsoft-translator-java-api-0.4-jar-with-dependencies.jar](http://microsoft-translator-java-api.googlecode.com/files/microsoft-translator-java-api-0.4-jar-with-dependencies.jar)
-
 * An [Apertium API key](http://api.apertium.org/register.jsp).
 * A [Bing API key](http://www.bing.com/developers/appids.aspx).
 * A [Google Translate API key](https://code.google.com/apis/console/?api=translate).
