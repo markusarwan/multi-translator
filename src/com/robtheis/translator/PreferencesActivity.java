@@ -45,9 +45,6 @@ public class PreferencesActivity extends PreferenceActivity implements
   public static final String KEY_TOGGLE_APERTIUM_ONLINE = "preference_service2";
   public static final String KEY_TOGGLE_BING_TRANSLATOR = "preference_service3";
   public static final String KEY_TOGGLE_GOOGLE_TRANSLATE = "preference_service4";
-  
-  // Place holder to disable Apertium offline in preferences
-  public static final String KEY_PLACE_HOLDER = "preference_place_holder";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
