@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
 import android.text.Editable;
@@ -144,24 +143,24 @@ public class MultiTranslatorActivity extends Activity {
 
     // This section commented to remove Apertium offline place holder in preparation for a release to Android Market
     
-//    inputField.addTextChangedListener(new TextWatcher() {
-//      @Override
-//      public void afterTextChanged(Editable s) {
-//    	  if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true)) {
-//    	    startOfflineTranslation();
-//    	  }
-//      }
-//
-//      @Override
-//      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//    	  // Do nothing
-//      }
-//
-//      @Override
-//    	public void onTextChanged(CharSequence s, int start, int before, int count) {
-//    	  // Do nothing
-//      }
-//    });
+    inputField.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void afterTextChanged(Editable s) {
+    	  if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true)) {
+    	    startOfflineTranslation();
+    	  }
+      }
+
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    	  // Do nothing
+      }
+
+      @Override
+    	public void onTextChanged(CharSequence s, int start, int before, int count) {
+    	  // Do nothing
+      }
+    });
   }
   
   @Override
