@@ -120,8 +120,6 @@ public class MultiTranslatorActivity extends Activity {
     }
     if (savedInstanceState != null && savedInstanceState.getBoolean("section1_view_visibility")) {
       section1.setVisibility(View.VISIBLE);
-      // TODO but the offline translation disappears anyway because the onTextChangedListener is invoked after the
-      // orientation change, and startOfflineTranslation. Fix this.
     }
     
     // Set up the list of languages available, based on service preferences
