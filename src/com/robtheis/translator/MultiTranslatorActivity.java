@@ -31,6 +31,7 @@ import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.Menu;
@@ -59,7 +60,7 @@ import android.widget.Toast;
 public class MultiTranslatorActivity extends Activity {
   public static final String TAG = MultiTranslatorActivity.class.getSimpleName();
 
-  private EditText inputField;
+  private static EditText inputField;
   private Button goButton, swapButton;
   private View onlineTranslationsView;
   private static View section1, section2, section3, section4;
@@ -108,10 +109,10 @@ public class MultiTranslatorActivity extends Activity {
     // the savedInstanceState.
     if (savedInstanceState != null && savedInstanceState.getBoolean("translations_view_visibility")) {
       onlineTranslationsView.setVisibility(View.VISIBLE);
-      translation1.setTextSize(savedInstanceState.getFloat("translation1_text_size"));
-      translation2.setTextSize(savedInstanceState.getFloat("translation2_text_size"));
-      translation3.setTextSize(savedInstanceState.getFloat("translation3_text_size"));
-      translation4.setTextSize(savedInstanceState.getFloat("translation4_text_size"));
+      translation1.setTextSize(TypedValue.COMPLEX_UNIT_PX, savedInstanceState.getFloat("translation1_text_size"));
+      translation2.setTextSize(TypedValue.COMPLEX_UNIT_PX, savedInstanceState.getFloat("translation2_text_size"));
+      translation3.setTextSize(TypedValue.COMPLEX_UNIT_PX, savedInstanceState.getFloat("translation3_text_size"));
+      translation4.setTextSize(TypedValue.COMPLEX_UNIT_PX, savedInstanceState.getFloat("translation4_text_size"));
       translation1.setText(savedInstanceState.getString("translation1_text"));
       translation2.setText(savedInstanceState.getString("translation2_text"));
       translation3.setText(savedInstanceState.getString("translation3_text"));
@@ -119,6 +120,8 @@ public class MultiTranslatorActivity extends Activity {
     }
     if (savedInstanceState != null && savedInstanceState.getBoolean("section1_view_visibility")) {
       section1.setVisibility(View.VISIBLE);
+      // TODO but the offline translation disappears anyway because the onTextChangedListener is invoked after the
+      // orientation change, and startOfflineTranslation. Fix this.
     }
     
     // Set up the list of languages available, based on service preferences
@@ -141,24 +144,22 @@ public class MultiTranslatorActivity extends Activity {
       }
     });
 
-    // This section commented to remove Apertium offline place holder in preparation for a release to Android Market
-    
     inputField.addTextChangedListener(new TextWatcher() {
       @Override
       public void afterTextChanged(Editable s) {
-    	  if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true)) {
-    	    startOfflineTranslation();
-    	  }
+        if (sharedPreferences.getBoolean(PreferencesActivity.KEY_TOGGLE_APERTIUM_OFFLINE, true)) {
+          startOfflineTranslation();
+        }
       }
 
       @Override
       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    	  // Do nothing
+        // Do nothing
       }
 
       @Override
-    	public void onTextChanged(CharSequence s, int start, int before, int count) {
-    	  // Do nothing
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+        // Do nothing
       }
     });
   }
@@ -322,15 +323,14 @@ public class MultiTranslatorActivity extends Activity {
         PreferencesActivity.DEFAULT_TARGET_LANGUAGE);
     
     // Hide the offline translation section if no text is present
-    if (inputField.getText().length() == 0) {
+    String text = inputField.getText().toString();
+    if (text.length() == 0) {
       section1.setVisibility(View.GONE);
       onlineTranslationsView.setVisibility(View.GONE);
     } else if (!source.equals(target)) {
       section1.setVisibility(View.VISIBLE);
-      {
     	// Start the translation
-    	TranslatorOffline.translateOffline(inputField.getText().toString(), source, target, translation1);  
-      }
+    	TranslatorOffline.translateOffline(text, source, target, translation1);  
     } else {
       // Tell the user to choose a language pair
       Toast.makeText(getApplicationContext(), "Choose a language pair for translation", Toast.LENGTH_LONG);
