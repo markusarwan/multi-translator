@@ -3,3 +3,7 @@ gen/
 target/
 src/test/resources/META-INF/config.properties
 .settings
+local.properties
+TranslateApertiumAsyncTask.java
+TranslateBingAsyncTask.java
+TranslateGoogleAsyncTask.java
