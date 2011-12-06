@@ -17,13 +17,16 @@ package com.robtheis.translator;
 
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
 
 import com.robtheis.aptr.language.Language;
 
 /**
- * Place holder for the offline Apertium translator.
+ * Place holder for the offline Apertium translator. Generates a pseudo-translation
+ * for the given text, as a place holder for true translation that will be replaced
+ * by a working system at a later date.
  * 
  * @author Robert Theis
  */
@@ -41,34 +44,43 @@ public final class TranslateOfflineAsyncTask extends AsyncTask<String, Void, Boo
     this.text = text;
     this.textView = textView;
   }
-  
+
   @Override
   protected synchronized void onPreExecute() {
     super.onPreExecute();
   }
-  
+
   @Override
   protected synchronized Boolean doInBackground(String... arg0) {
-    try {
-      // Check if the text matches our place holder values
-      if (text.equalsIgnoreCase("stop")) {
-    	translatedText = "alto";
-      } else if (text.equalsIgnoreCase("alto")) {
-        translatedText = "stop";
-      } else if (text.equalsIgnoreCase("hola")) {
-        translatedText = "hello";
-      } else if (text.equalsIgnoreCase("hello")) {
-        translatedText = "hola";
-      } else if (text.equalsIgnoreCase("prueba")) {
-          translatedText = "test";
-      } else if (text.equalsIgnoreCase("test")) {
-          translatedText = "prueba";
-      } else {
-        translatedText = text;
+    // Generate a pseudo-translation for the given text string.
+    // No source/target language checking is performed.
+    String[] words = text.split("\\s+");
+    StringBuilder pseudoTranslation = new StringBuilder();
+    for (String w : words) { 
+      Log.d("TranslateOfflineAsyncTask", "word: " + w);
+      try {
+        pseudoTranslation.append(" ");
+        // Check if the text matches our place holder values
+        if (w.equalsIgnoreCase("stop")) {
+          pseudoTranslation.append("alto");
+        } else if (w.equalsIgnoreCase("alto")) {
+          pseudoTranslation.append("stop");
+        } else if (w.equalsIgnoreCase("hola")) {
+          pseudoTranslation.append("hello");
+        } else if (w.equalsIgnoreCase("hello")) {
+          pseudoTranslation.append("hola");
+        } else if (w.equalsIgnoreCase("prueba")) {
+          pseudoTranslation.append("test");
+        } else if (w.equalsIgnoreCase("test")) {
+          pseudoTranslation.append("prueba");
+        } else {
+          pseudoTranslation.append(w);
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+        return false;
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-      return false;
+      translatedText = pseudoTranslation.toString();
     }
     return true;
   }
@@ -76,20 +88,21 @@ public final class TranslateOfflineAsyncTask extends AsyncTask<String, Void, Boo
   @Override
   protected synchronized void onPostExecute(Boolean result) {
     super.onPostExecute(result);
-    
+
     if (result) {
       // Reset the text formatting
       if (textView != null) {
         textView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL), Typeface.NORMAL);
       }
-      
-      // Put the translation into the textview
-      textView.setText(translatedText.trim());
 
-      // Crudely scale betweeen 22 and 32 -- bigger font for shorter text
-      int scaledSize = Math.max(22, 32 - translatedText.length() / 4);
-      textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, scaledSize);
+      if (translatedText != null) {
+        // Put the translation into the textview
+        textView.setText(translatedText.trim());
 
+        // Crudely scale betweeen 22 and 32 -- bigger font for shorter text
+        int scaledSize = Math.max(22, 32 - translatedText.length() / 4);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, scaledSize);
+      }
     } else {
       textView.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC), Typeface.ITALIC);
       textView.setText("Unavailable");
