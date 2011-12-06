@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.util.TypedValue;
 import android.widget.TextView;
 
+import com.google.api.GoogleAPI;
 import com.google.api.translate.Language;
 import com.google.api.translate.Translate;
 
@@ -31,8 +32,8 @@ import com.google.api.translate.Translate;
  */
 public final class TranslateGoogleAsyncTask extends AsyncTask<String, Void, Boolean> {
 
-  private static final String API_KEY = "AIzaSyC0Wd5wJPlLclmXsx09rnWh5UfCRbehtYE";
-  private static final String HTTP_REFERRER = "github.com/rmtheis/multi-translator"; 
+  private static final String API_KEY = " [ PUT API KEY HERE ] ";
+  private static final String HTTP_REFERRER = " [ PUT REFERER HERE ] "; 
 
   private Language sourceLanguage;
   private Language targetLanguage;
@@ -58,11 +59,11 @@ public final class TranslateGoogleAsyncTask extends AsyncTask<String, Void, Bool
   
   @Override
   protected synchronized Boolean doInBackground(String... arg0) {
-    Translate.setKey(API_KEY);
-    Translate.setHttpReferrer(HTTP_REFERRER);
+    GoogleAPI.setKey(API_KEY);
+    GoogleAPI.setHttpReferrer(HTTP_REFERRER);
     try {
       // Request translation
-      translatedText = Translate.execute(text, sourceLanguage, targetLanguage);
+      translatedText = Translate.DEFAULT.execute(text, sourceLanguage, targetLanguage);
     } catch (Exception e) {
       e.printStackTrace();
       return false;
