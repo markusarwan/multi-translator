@@ -20,7 +20,7 @@
 			android:paddingTop="15dip" android:paddingBottom="15dip"
 			android:paddingRight="55dip" android:layout_centerVertical="true"></Spinner>
 
-		<Button android:layout_width="wrap_content" android:text="&lt;&gt;"
+		<Button android:layout_width="wrap_content" android:text="@string/button_switch"
 			android:layout_height="wrap_content" android:id="@+id/button_swap_languages"
 			android:layout_centerHorizontal="true" android:layout_centerVertical="true"></Button>
 	</RelativeLayout>
@@ -31,12 +31,12 @@
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_below="@+id/chooser">
 
-		<Button android:layout_width="wrap_content" android:text="Go"
-			android:layout_height="wrap_content" android:id="@+id/button_go"
+		<Button android:layout_width="wrap_content" android:text="@string/button_go"
+			android:layout_height="wrap_content" android:id="@+id/button_start"
 			android:layout_alignParentTop="true" android:layout_alignParentRight="true"></Button>
 		<EditText android:layout_width="fill_parent" android:id="@+id/editText1"
-			android:layout_height="wrap_content" android:layout_alignParentTop="true"
-			android:layout_toLeftOf="@+id/button_go">
+		    android:inputType="text" android:layout_height="wrap_content" 
+		    android:layout_alignParentTop="true" android:layout_toLeftOf="@+id/button_go">
 			<requestFocus></requestFocus>
 		</EditText>
 	</RelativeLayout>
@@ -64,7 +64,8 @@
 					android:layout_width="fill_parent" android:layout_height="wrap_content"
 					android:scaleType="fitXY" android:paddingLeft="0dp"
 					android:paddingRight="0dp" android:paddingBottom="5dp"
-					android:paddingTop="5dp" android:layout_below="@+id/translation1" />
+					android:paddingTop="5dp" android:layout_below="@+id/translation1" 
+					android:contentDescription="@string/bar_content_type" />
 			</RelativeLayout>
 			
 			<!-- All web service based translation results -->
@@ -88,7 +89,8 @@
 						android:layout_width="fill_parent" android:layout_height="wrap_content"
 						android:scaleType="fitXY" android:paddingLeft="0dp"
 						android:paddingRight="0dp" android:paddingBottom="5dp"
-						android:paddingTop="5dp" android:layout_below="@+id/translation2" />
+						android:paddingTop="5dp" android:layout_below="@+id/translation2" 
+						android:contentDescription="@string/bar_content_type" />
 				</RelativeLayout>
 
 				<!-- Bing Translator -->
@@ -106,7 +108,8 @@
 						android:layout_width="fill_parent" android:layout_height="wrap_content"
 						android:scaleType="fitXY" android:paddingLeft="0dp"
 						android:paddingRight="0dp" android:paddingBottom="5dp"
-						android:paddingTop="5dp" android:layout_below="@+id/translation3" />
+						android:paddingTop="5dp" android:layout_below="@+id/translation3" 
+						android:contentDescription="@string/bar_content_type" />
 				</RelativeLayout>
 
 				<!-- Google Translate -->
@@ -124,7 +127,8 @@
 						android:paddingBottom="5dp" android:src="@android:drawable/divider_horizontal_dark"
 						android:paddingLeft="0dp" android:id="@+id/bar4"
 						android:layout_width="fill_parent" android:paddingTop="5dp"
-						android:scaleType="fitXY"></ImageView>
+						android:scaleType="fitXY" 
+						android:contentDescription="@string/bar_content_type" ></ImageView>
 				</RelativeLayout>
 			</RelativeLayout>
 		</RelativeLayout>
