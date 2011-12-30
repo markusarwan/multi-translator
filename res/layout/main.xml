@@ -32,7 +32,7 @@
 		android:layout_below="@+id/chooser">
 
 		<Button android:layout_width="wrap_content" android:text="@string/button_go"
-			android:layout_height="wrap_content" android:id="@+id/button_start"
+			android:layout_height="wrap_content" android:id="@+id/button_go"
 			android:layout_alignParentTop="true" android:layout_alignParentRight="true"></Button>
 		<EditText android:layout_width="fill_parent" android:id="@+id/editText1"
 		    android:inputType="text" android:layout_height="wrap_content" 
